@@ -26,9 +26,16 @@ class ZeroaPasswordManagerGUI:
             print(f"Error loading icon: {e}")
 
     def setup_ui(self):
-        # Seed Phrase Options
+        try:
+            self.logo_image = tk.PhotoImage(file="telestai.png")
+            self.logo_label = tk.Label(self.root, image=self.logo_image)
+            self.logo_label.grid(row=0, column=0, padx=10, pady=10)  # Place the image at the top of the window
+        except Exception as e:
+            print(f"Error loading logo: {e}")
+
+        # Seed Phrase Options Frame
         self.seed_frame = tk.LabelFrame(self.root, text="BIP-39 Seed Phrase Options")
-        self.seed_frame.grid(row=0, column=0, padx=10, pady=10)
+        self.seed_frame.grid(row=1, column=0, padx=10, pady=10)
 
         self.generate_button = tk.Button(self.seed_frame, text="Generate New Seed Phrase", command=self.generate_seed_phrase)
         self.generate_button.grid(row=0, column=0, padx=10, pady=5)
@@ -39,6 +46,7 @@ class ZeroaPasswordManagerGUI:
         # Warning to the user
         self.warning_label = tk.Label(self.root, text="WARNING: Your seed phrase cannot be recovered. Store it securely.")
         self.warning_label.grid(row=2, column=0, padx=10, pady=10)
+
 
     def generate_seed_phrase(self):
         # Generate the seed phrase using the bip39_manager
