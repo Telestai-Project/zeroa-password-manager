@@ -41,11 +41,15 @@ class ZeroaPasswordManagerGUI:
         self.warning_label.grid(row=2, column=0, padx=10, pady=10)
 
     def generate_seed_phrase(self):
+        # Generate the seed phrase using the bip39_manager
         seed_phrase = self.bip39_manager.generate_seed_phrase()
-        messagebox.showinfo("New Seed Phrase", f"Your new seed phrase is:\n\n{seed_phrase}\n\nPlease store it securely.", title="Seed Phrase Generated")
+
+        # Show the seed phrase in a messagebox
+        messagebox.showinfo("Seed Phrase Generated", f"Your new seed phrase is:\n\n{seed_phrase}\n\nPlease store it securely.")
 
         # Derive the encryption key and prepare the vault
         self.setup_vault_with_seed(seed_phrase)
+
 
     def use_existing_seed(self):
         seed_phrase = self.get_seed_phrase_from_user()
@@ -54,19 +58,23 @@ class ZeroaPasswordManagerGUI:
             self.setup_vault_with_seed(seed_phrase)
 
     def get_seed_phrase_from_user(self):
-        seed_phrase = simpledialog.askstring("Enter Seed Phrase", "Please enter your BIP-39 seed phrase:", title="Enter Seed Phrase")  # Use simpledialog with a title
+        seed_phrase = simpledialog.askstring("Enter Seed Phrase", "Please enter your BIP-39 seed phrase:")
         if seed_phrase:
             return seed_phrase.strip()
         return None
+
 
     def setup_vault_with_seed(self, seed_phrase):
         # Derive the encryption key and initialize the password vault
         encryption_key = self.bip39_manager.derive_key_from_seed()
         self.password_vault = PasswordVault(encryption_key)
-        messagebox.showinfo("Encryption Setup", "Your password vault is now secured with the seed phrase.", title="Vault Secured")
 
+        # Show the encryption setup message (corrected)
+        messagebox.showinfo("Vault Secured", "Your password vault is now secured with the seed phrase.")
+        
         # Proceed to the password management interface
         self.show_password_manager()
+
 
     def show_password_manager(self):
         # Clear previous widgets
@@ -107,24 +115,29 @@ class ZeroaPasswordManagerGUI:
         password = self.pwd_password.get()
 
         if not label or not password:
-            messagebox.showerror("Error", "Please fill in both fields.", title="Error")
+            messagebox.showerror("Error", "Please fill in both fields.")
             return
 
         self.password_vault.store_password(label, password)
         self.pwd_list.insert(tk.END, label)
-        messagebox.showinfo("Success", f"Password for {label} stored successfully!", title="Success")
+        
+        # Correct usage of messagebox.showinfo
+        messagebox.showinfo("Success", f"Password for {label} stored successfully!")
+
 
     def view_password(self):
         selected_label = self.pwd_list.get(tk.ACTIVE)
         if not selected_label:
-            messagebox.showerror("Error", "Please select a password to view.", title="Error")
+            messagebox.showerror("Error", "Please select a password to view.")
             return
 
         decrypted_password = self.password_vault.retrieve_password(selected_label)
         if decrypted_password:
-            messagebox.showinfo("Password", f"The password for {selected_label} is: {decrypted_password}", title="View Password")
+            # Correct usage of messagebox.showinfo
+            messagebox.showinfo("View Password", f"The password for {selected_label} is: {decrypted_password}")
         else:
-            messagebox.showerror("Error", "Failed to retrieve the password.", title="Error")
+            messagebox.showerror("Error", "Failed to retrieve the password.")
+
 
     def delete_password(self):
         selected_label = self.pwd_list.get(tk.ACTIVE)
