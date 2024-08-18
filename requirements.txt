@@ -1,0 +1,2 @@
+bip-utils==2.1.0         # Library for handling BIP-39 seed phrases
+pycryptodome==3.10.1     # Cryptography library for AES encryption

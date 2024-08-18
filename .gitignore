@@ -1,0 +1,17 @@
+# Ignore password vault files
+passwords.json
+
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directories
+venv/
+env/
+.venv/
+
+# Ignore environment variable files
+.env
+
+# macOS generated files
+.DS_Store
