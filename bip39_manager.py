@@ -19,10 +19,11 @@ class BIP39Manager:
         self.seed_phrase = seed_phrase
         return self.seed_phrase
 
-    # Derive encryption key from the seed phrase
-    def derive_key_from_seed(self):
+    # Derive the encryption key from the provided seed phrase
+    def derive_key_from_seed(self, seed_phrase):
+        self.seed_phrase = seed_phrase
         seed_bytes = Bip39SeedGenerator(self.seed_phrase).Generate()
-        self.encryption_key = seed_bytes[:32]  # Use first 32 bytes as encryption key
+        self.encryption_key = seed_bytes[:32]  # Use the first 32 bytes for AES encryption
         return self.encryption_key
 
 class PasswordVault:
